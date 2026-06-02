@@ -39,10 +39,13 @@ public class MarcasDeMaquiagemDTO {
         return anoFundacao;
     }
 
+    public boolean getCrueltyFree() {
+        return crueltyFree;
+    }
+
     public void setAnoFundacao(int anoFundacao) {
         this.anoFundacao = anoFundacao;
     }
-
     public boolean isCrueltyFree() {
         return crueltyFree;
     }

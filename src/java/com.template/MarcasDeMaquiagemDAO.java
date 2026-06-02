@@ -57,7 +57,7 @@ public class MarcasDeMaquiagemDAO {
         }
     }
 
-    public void selecionarMarca() {
+    public void visualizarMarca() {
         String sql = "SELECT * FROM marcas_maquiagem";
         try (
                 Connection c = new Conexao().conectaBD();
