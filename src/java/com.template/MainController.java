@@ -20,7 +20,6 @@ public class MainController
     @FXML private TextField txtNome;
     @FXML private TextField txtAno;
     @FXML private TextField txtId;
-    @FXML private TextField txtTeste;
     @FXML private TextField txtPaisOrigem;
     @FXML private TextField txtCrueltyFree;
     @FXML private TableView<MarcasDeMaquiagemDTO> tblMarcasDeMaquiagem;
@@ -36,7 +35,7 @@ public class MainController
         maquiagem.setNome(txtNome.getText());
         maquiagem.setPaisOrigem(txtPaisOrigem.getText());
         maquiagem.setAnoFundacao(Integer.parseInt(txtAno.getText()));
-        maquiagem.setCrueltyFree(Boolean.parseBoolean(txtTeste.getText()));
+        maquiagem.setCrueltyFree(Boolean.parseBoolean(txtCrueltyFree.getText()));
         MarcasDeMaquiagemDAO dao = new MarcasDeMaquiagemDAO();
         dao.cadastrarMarca(maquiagem);
         System.out.println("Marca cadastrada com sucesso!");
@@ -44,7 +43,7 @@ public class MainController
         txtNome.clear();
         txtPaisOrigem.clear();
         txtAno.clear();
-        txtTeste.clear();
+        txtCrueltyFree.clear();
     }
 
     @FXML
@@ -70,7 +69,7 @@ public class MainController
     private void limparCampos(){
         txtId.clear();
         txtNome.clear();
-        txtTeste.clear();
+        txtCrueltyFree.clear();
         txtAno.clear();
         txtPaisOrigem.clear();
         tblMarcasDeMaquiagem.getSelectionModel().clearSelection();

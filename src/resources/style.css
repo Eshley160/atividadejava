@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('fonts/Poppins-Regular.ttf');
+}
+
+.root {
+    -fx-font-family: 'Poppins';
+}
+
+.label, .button, .text-field {
+    -fx-font-family: 'Poppins';
+}

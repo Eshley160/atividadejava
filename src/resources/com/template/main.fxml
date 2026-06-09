@@ -5,74 +5,118 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.template.MainController">
+<AnchorPane prefHeight="445.0" prefWidth="645.0" style="-fx-background-color: F0F4F8;" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.template.MainController">
    <children>
-      <TableView fx:id="tblMarcasDeMaquiagem" layoutX="109.0" layoutY="176.0" onMouseClicked="#carregarCampos" prefHeight="200.0" prefWidth="480.0" style="-fx-background-color: ffe6e8;">
+      <TableView fx:id="tblMarcasDeMaquiagem" layoutX="111.0" layoutY="213.0" onMouseClicked="#carregarCampos" prefHeight="200.0" prefWidth="514.0" style="-fx-background-color: ffe6e8;">
          <columns>
-            <TableColumn fx:id="colID" editable="false" prefWidth="75.0" style="-fx-background-color: ffbdbd;" text="ID" />
-            <TableColumn fx:id="colNome" editable="false" prefWidth="75.0" style="-fx-background-color: ffbdbd;" text="Nome" />
-            <TableColumn fx:id="colPaisOrigem" editable="false" prefWidth="93.0" style="-fx-background-color: ffbdbd;" text="País de origem" />
-            <TableColumn fx:id="colAno" editable="false" prefWidth="115.0" style="-fx-background-color: ffbdbd;" text="Ano de fundacão" />
-            <TableColumn fx:id="colTeste" editable="false" prefWidth="121.0" style="-fx-background-color: ffbdbd;" text="Teste em animais" />
+            <TableColumn fx:id="colID" editable="false" prefWidth="61.0" style="-fx-background-color: ffbdbd;" text="ID" />
+            <TableColumn fx:id="colNome" editable="false" prefWidth="69.0" style="-fx-background-color: ffbdbd;" text="Nome" />
+            <TableColumn fx:id="colPaisOrigem" editable="false" prefWidth="125.0" style="-fx-background-color: ffbdbd;" text="País de origem" />
+            <TableColumn fx:id="colAno" editable="false" prefWidth="131.0" style="-fx-background-color: ffbdbd;" text="Ano de fundacão" />
+            <TableColumn fx:id="colTeste" editable="false" prefWidth="127.0" style="-fx-background-color: ffbdbd;" text="Teste em animais" />
          </columns>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.590822160243988" />
+               </color>
+            </DropShadow>
+         </effect>
       </TableView>
-      <TextField fx:id="txtNome" layoutX="153.0" layoutY="59.0" style="-fx-border-color: f79999;" />
-      <TextField fx:id="txtId" editable="false" layoutX="440.0" layoutY="95.0" prefHeight="26.0" prefWidth="106.0" style="-fx-border-color: f79999;" />
-      <TextField fx:id="txtPaisOrigem" layoutX="153.0" layoutY="95.0" style="-fx-border-color: f79999;" />
-      <TextField fx:id="txtAno" layoutX="440.0" layoutY="59.0" prefHeight="26.0" prefWidth="106.0" style="-fx-border-color: f79999;" />
-      <TextField fx:id="txtTeste" layoutX="153.0" layoutY="135.0" prefHeight="26.0" prefWidth="160.0" style="-fx-border-color: f79999;" />
-      <Label layoutX="73.0" layoutY="64.0" text="Nome:">
+      <TextField fx:id="txtNome" layoutX="166.0" layoutY="85.0" style="-fx-border-color: f79999; -fx-border-radius: 10;" />
+      <TextField fx:id="txtId" editable="false" layoutX="477.0" layoutY="121.0" prefHeight="26.0" prefWidth="106.0" style="-fx-border-color: f79999; -fx-border-radius: 10;" />
+      <TextField fx:id="txtPaisOrigem" layoutX="166.0" layoutY="121.0" style="-fx-border-color: f79999; -fx-border-radius: 10;" />
+      <TextField fx:id="txtAno" layoutX="477.0" layoutY="85.0" prefHeight="26.0" prefWidth="106.0" style="-fx-border-color: f79999; -fx-border-radius: 10;" />
+      <TextField fx:id="txtCrueltyFree" layoutX="166.0" layoutY="161.0" prefHeight="30.0" prefWidth="170.0" style="-fx-border-color: f79999; -fx-border-radius: 10;" />
+      <Label layoutX="64.0" layoutY="89.0" text="Nome:">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="337.0" layoutY="63.0" text="Ano de fundação:">
+      <Label layoutX="350.0" layoutY="89.0" text="Ano de fundação:">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="49.0" layoutY="99.0" text="País de origem:">
+      <Label layoutX="40.0" layoutY="124.0" text="País de origem:">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="42.0" layoutY="139.0" text="Teste em animais:">
+      <Label layoutX="33.0" layoutY="164.0" text="Teste em animais:">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="418.0" layoutY="99.0" text="ID:">
+      <Label layoutX="450.0" layoutY="124.0" text="ID:">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="147.0" layoutY="14.0" prefHeight="28.0" prefWidth="333.0" text="Cadastro de marca de maquiagem" textFill="#171717">
+      <Label layoutX="152.0" layoutY="18.0" prefHeight="46.0" prefWidth="393.0" style="-fx-font-family: Poppins;" text="Cadastro de marcas de maquiagem" textFill="#171717">
          <font>
             <Font name="Charter Bold" size="21.0" />
          </font>
       </Label>
-      <Button layoutX="32.0" layoutY="210.0" mnemonicParsing="false" onAction="#btnSalvar" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Salvar">
+      <Button layoutX="20.0" layoutY="233.0" mnemonicParsing="false" onAction="#btnSalvarAction" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Salvar">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
+         <effect>
+            <DropShadow height="15.1" radius="8.525">
+               <color>
+                  <Color opacity="0.41873806715011597" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
-      <Button layoutX="32.0" layoutY="248.0" mnemonicParsing="false" onAction="#btnEditar" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Editar">
+      <Button layoutX="20.0" layoutY="276.0" mnemonicParsing="false" onAction="#btnEditarAction" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Editar">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
+         <effect>
+            <DropShadow height="15.1" radius="8.525">
+               <color>
+                  <Color opacity="0.41873806715011597" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
-      <Button layoutX="32.0" layoutY="285.0" mnemonicParsing="false" onAction="#btnDeletar" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Deletar">
+      <Button layoutX="20.0" layoutY="321.0" mnemonicParsing="false" onAction="#btnDeletarAction" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Deletar">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
+         <effect>
+            <DropShadow height="15.1" radius="8.525">
+               <color>
+                  <Color opacity="0.41873806715011597" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
-      <Button layoutX="32.0" layoutY="323.0" mnemonicParsing="false" onAction="#btnLimparAction" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Limpar">
+      <Button layoutX="20.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnLimparAction" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Limpar">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
+         <effect>
+            <DropShadow height="15.1" radius="8.525">
+               <color>
+                  <Color opacity="0.41873806715011597" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
+      <ImageView fitHeight="74.0" fitWidth="100.0" layoutX="46.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../makeups.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

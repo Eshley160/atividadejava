@@ -2,7 +2,6 @@
   <library name="lib">
     <CLASSES>
       <root url="file://$USER_HOME$/Downloads/javafx-sdk-25.0.3/lib" />
-      <root url="jar://$USER_HOME$/Downloads/postgresql-42.7.11.jar!/" />
     </CLASSES>
     <JAVADOC />
     <NATIVE>
