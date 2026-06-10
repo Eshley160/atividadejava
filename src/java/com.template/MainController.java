@@ -3,10 +3,7 @@ package com.template;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ public class MainController
     @FXML private TextField txtAno;
     @FXML private TextField txtId;
     @FXML private TextField txtPaisOrigem;
-    @FXML private TextField txtCrueltyFree;
+    @FXML private CheckBox chkTesteAnimais;
     @FXML private TableView<MarcasDeMaquiagemDTO> tblMarcasDeMaquiagem;
     @FXML private TableColumn<MarcasDeMaquiagemDTO, String> colNome;
     @FXML private TableColumn<MarcasDeMaquiagemDTO, Integer> colID;
@@ -35,7 +32,7 @@ public class MainController
         maquiagem.setNome(txtNome.getText());
         maquiagem.setPaisOrigem(txtPaisOrigem.getText());
         maquiagem.setAnoFundacao(Integer.parseInt(txtAno.getText()));
-        maquiagem.setCrueltyFree(Boolean.parseBoolean(txtCrueltyFree.getText()));
+        maquiagem.setCrueltyFree(chkTesteAnimais.isSelected());
         MarcasDeMaquiagemDAO dao = new MarcasDeMaquiagemDAO();
         dao.cadastrarMarca(maquiagem);
         System.out.println("Marca cadastrada com sucesso!");
@@ -43,7 +40,7 @@ public class MainController
         txtNome.clear();
         txtPaisOrigem.clear();
         txtAno.clear();
-        txtCrueltyFree.clear();
+        chkTesteAnimais.setSelected(false);
     }
 
     @FXML
@@ -54,6 +51,12 @@ public class MainController
         colAno.setCellValueFactory(new PropertyValueFactory<>("anoFundacao"));
         colPaisOrigem.setCellValueFactory(new PropertyValueFactory<>("paisOrigem"));
         colTeste.setCellValueFactory(new PropertyValueFactory<>("crueltyFree"));
+
+        txtAno.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtAno.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
 
         carregarMaquiagens();
     }
@@ -69,7 +72,7 @@ public class MainController
     private void limparCampos(){
         txtId.clear();
         txtNome.clear();
-        txtCrueltyFree.clear();
+        chkTesteAnimais.setSelected(false);
         txtAno.clear();
         txtPaisOrigem.clear();
         tblMarcasDeMaquiagem.getSelectionModel().clearSelection();
@@ -83,7 +86,7 @@ public class MainController
             txtId.setText(String.valueOf(marcaDto.getId()));
             txtNome.setText(marcaDto.getNome());
             txtAno.setText(String.valueOf(marcaDto.getAnoFundacao()));
-            txtCrueltyFree.setText(String.valueOf(marcaDto.getCrueltyFree()));
+            chkTesteAnimais.setSelected(marcaDto.getCrueltyFree());
             txtPaisOrigem.setText(marcaDto.getPaisOrigem());
         }
     }
@@ -93,13 +96,13 @@ public class MainController
         String nome = txtNome.getText();
         String pais = txtPaisOrigem.getText();
         int ano = Integer.parseInt(txtAno.getText());
-        boolean crueltyFree = Boolean.parseBoolean(txtCrueltyFree.getText());
+        boolean testeAnimais = chkTesteAnimais.isSelected();
 
         MarcasDeMaquiagemDTO marcaDto = new MarcasDeMaquiagemDTO();
         marcaDto.setNome(nome);
         marcaDto.setPaisOrigem(pais);
         marcaDto.setAnoFundacao(ano);
-        marcaDto.setCrueltyFree(crueltyFree);
+        marcaDto.setCrueltyFree(testeAnimais);
 
         MarcasDeMaquiagemDAO marcaDao = new MarcasDeMaquiagemDAO();
         marcaDao.cadastrarMarca(marcaDto);
@@ -116,18 +119,16 @@ public class MainController
 
             marcaDto.setId(marcaSelecionada.getId());
             marcaDto.setNome(txtNome.getText());
-            marcaDto.setCrueltyFree(Boolean.parseBoolean(txtCrueltyFree.getText()));
             marcaDto.setAnoFundacao(Integer.parseInt(txtAno.getText()));
             marcaDto.setPaisOrigem(txtPaisOrigem.getText());
+            marcaDto.setCrueltyFree(chkTesteAnimais.isSelected());
 
             MarcasDeMaquiagemDAO marcaDao = new MarcasDeMaquiagemDAO();
-
             marcaDao.atualizarMarca(marcaDto);
 
             carregarMaquiagens();
             limparCampos();
         }
-
     }
 
     @FXML
