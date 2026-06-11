@@ -69,7 +69,7 @@
       </ImageView>
       <VBox layoutX="2.0" layoutY="213.0" prefHeight="200.0" prefWidth="109.0" style="-fx-alignment: center; -fx-spacing: 15;">
          <children>
-            <Button mnemonicParsing="false" onAction="#btnSalvarAction" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Salvar">
+            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#btnSalvarAction" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Salvar">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -81,7 +81,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button mnemonicParsing="false" onAction="#btnEditarAction" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Editar">
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#btnEditarAction" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Editar">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -93,7 +93,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button mnemonicParsing="false" onAction="#btnDeletarAction" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Deletar">
+            <Button fx:id="btnDeletar" mnemonicParsing="false" onAction="#btnDeletarAction" style="-fx-background-color: ffe6e8; -fx-border-color: f79999;" text="Deletar">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

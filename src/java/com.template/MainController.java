@@ -27,23 +27,6 @@ public class MainController
     @FXML private TableColumn<MarcasDeMaquiagemDTO, Boolean> colTeste;
 
     @FXML
-    private void btnCadastrarAction(ActionEvent event) {
-        MarcasDeMaquiagemDTO maquiagem = new MarcasDeMaquiagemDTO();
-        maquiagem.setNome(txtNome.getText());
-        maquiagem.setPaisOrigem(txtPaisOrigem.getText());
-        maquiagem.setAnoFundacao(Integer.parseInt(txtAno.getText()));
-        maquiagem.setCrueltyFree(chkTesteAnimais.isSelected());
-        MarcasDeMaquiagemDAO dao = new MarcasDeMaquiagemDAO();
-        dao.cadastrarMarca(maquiagem);
-        System.out.println("Marca cadastrada com sucesso!");
-
-        txtNome.clear();
-        txtPaisOrigem.clear();
-        txtAno.clear();
-        chkTesteAnimais.setSelected(false);
-    }
-
-    @FXML
     public void initialize() {
 
         colID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -58,6 +41,8 @@ public class MainController
             }
         });
 
+        btnEditar.setDisable(true);
+        btnDeletar.setDisable(true);
         carregarMaquiagens();
     }
 
@@ -65,6 +50,8 @@ public class MainController
     private void carregarMaquiagens(){
         MarcasDeMaquiagemDAO objMarcaDAO = new MarcasDeMaquiagemDAO();
         ArrayList<MarcasDeMaquiagemDTO> listaMaquiagens = objMarcaDAO.listarMaquiagens();
+
+        tblMarcasDeMaquiagem.getItems().clear();
         tblMarcasDeMaquiagem.setItems(FXCollections.observableArrayList(listaMaquiagens));
     }
 
@@ -76,6 +63,9 @@ public class MainController
         txtAno.clear();
         txtPaisOrigem.clear();
         tblMarcasDeMaquiagem.getSelectionModel().clearSelection();
+
+        btnEditar.setDisable(true);
+        btnDeletar.setDisable(true);
     }
 
     @FXML
@@ -88,35 +78,52 @@ public class MainController
             txtAno.setText(String.valueOf(marcaDto.getAnoFundacao()));
             chkTesteAnimais.setSelected(marcaDto.getCrueltyFree());
             txtPaisOrigem.setText(marcaDto.getPaisOrigem());
+
+            btnEditar.setDisable(false);
+            btnDeletar.setDisable(false);
         }
     }
 
     @FXML
     private void btnSalvarAction(ActionEvent event) {
-        String nome = txtNome.getText();
-        String pais = txtPaisOrigem.getText();
-        int ano = Integer.parseInt(txtAno.getText());
-        boolean testeAnimais = chkTesteAnimais.isSelected();
+        if (txtNome.getText().trim().isEmpty() || txtPaisOrigem.getText().trim().isEmpty() || txtAno.getText().trim().isEmpty()) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Campos Obrigatórios");
+            alerta.setHeaderText("Ocorreu um problema.");
+            alerta.setContentText("Por favor, preencha o Nome, País de Origem e o Ano de Fundação.");
 
-        MarcasDeMaquiagemDTO marcaDto = new MarcasDeMaquiagemDTO();
-        marcaDto.setNome(nome);
-        marcaDto.setPaisOrigem(pais);
-        marcaDto.setAnoFundacao(ano);
-        marcaDto.setCrueltyFree(testeAnimais);
+            alerta.showAndWait();
+            return;
+        }
 
-        MarcasDeMaquiagemDAO marcaDao = new MarcasDeMaquiagemDAO();
-        marcaDao.cadastrarMarca(marcaDto);
+        MarcasDeMaquiagemDTO maquiagem = new MarcasDeMaquiagemDTO();
+        maquiagem.setNome(txtNome.getText());
+        maquiagem.setPaisOrigem(txtPaisOrigem.getText());
+        maquiagem.setAnoFundacao(Integer.parseInt(txtAno.getText()));
+        maquiagem.setCrueltyFree(chkTesteAnimais.isSelected());
+
+        MarcasDeMaquiagemDAO dao = new MarcasDeMaquiagemDAO();
+        dao.cadastrarMarca(maquiagem);
+        System.out.println("Marca cadastrada com sucesso!");
 
         carregarMaquiagens();
+        limparCampos();
     }
 
     @FXML
     private void btnEditarAction(ActionEvent event) {
         MarcasDeMaquiagemDTO marcaSelecionada = tblMarcasDeMaquiagem.getSelectionModel().getSelectedItem();
-
         if (marcaSelecionada != null) {
-            MarcasDeMaquiagemDTO marcaDto = new MarcasDeMaquiagemDTO();
+            if (txtNome.getText().trim().isEmpty() || txtPaisOrigem.getText().trim().isEmpty() || txtAno.getText().trim().isEmpty()) {
+                Alert alerta = new Alert(Alert.AlertType.WARNING);
+                alerta.setTitle("Campos Obrigatórios");
+                alerta.setHeaderText("Campos em branco");
+                alerta.setContentText("Você não pode salvar uma marca com campos vazios!");
+                alerta.showAndWait();
+                return;
+            }
 
+            MarcasDeMaquiagemDTO marcaDto = new MarcasDeMaquiagemDTO();
             marcaDto.setId(marcaSelecionada.getId());
             marcaDto.setNome(txtNome.getText());
             marcaDto.setAnoFundacao(Integer.parseInt(txtAno.getText()));
