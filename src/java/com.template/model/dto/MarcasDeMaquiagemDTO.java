@@ -1,4 +1,4 @@
-package com.template;
+package com.template.model.dto;
 
 /* declarando a classe DTO, responsável por representar os dados da entidade */
 //contém getters e setters relacionados aos campos da tabela marcas_maquiagem no banco de dados.

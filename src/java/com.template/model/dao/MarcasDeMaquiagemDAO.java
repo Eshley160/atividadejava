@@ -1,4 +1,7 @@
-package com.template;
+package com.template.model.dao;
+
+import com.template.model.Conexao;
+import com.template.model.dto.MarcasDeMaquiagemDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,7 +54,6 @@ public class MarcasDeMaquiagemDAO {
             ps.setBoolean(4, maquiagem.isCrueltyFree());
             ps.executeUpdate();
         } catch (SQLException e) {
-
             Logger.getLogger(MarcasDeMaquiagemDAO.class.getName())
                     .log(Level.SEVERE, null, e);
         }

@@ -14,13 +14,13 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="444.0" prefWidth="645.0" style="-fx-background-color: F0F4F8;" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.template.MainController">
+<AnchorPane prefHeight="444.0" prefWidth="645.0" style="-fx-background-color: F0F4F8;" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.template.controller.MainController">
    <children>
       <TableView fx:id="tblMarcasDeMaquiagem" layoutX="111.0" layoutY="213.0" onMouseClicked="#carregarCampos" prefHeight="200.0" prefWidth="514.0" style="-fx-background-color: ffe6e8;">
          <columns>
             <TableColumn fx:id="colID" editable="false" prefWidth="61.0" style="-fx-background-color: ffbdbd;" text="ID" />
-            <TableColumn fx:id="colNome" editable="false" prefWidth="69.0" style="-fx-background-color: ffbdbd;" text="Nome" />
-            <TableColumn fx:id="colPaisOrigem" editable="false" prefWidth="125.0" style="-fx-background-color: ffbdbd;" text="País de origem" />
+            <TableColumn fx:id="colNome" editable="false" prefWidth="84.0" style="-fx-background-color: ffbdbd;" text="Nome" />
+            <TableColumn fx:id="colPaisOrigem" editable="false" prefWidth="110.0" style="-fx-background-color: ffbdbd;" text="País de origem" />
             <TableColumn fx:id="colAno" editable="false" prefWidth="131.0" style="-fx-background-color: ffbdbd;" text="Ano de fundacão" />
             <TableColumn fx:id="colTeste" editable="false" prefWidth="127.0" style="-fx-background-color: ffbdbd;" text="Teste em animais" />
          </columns>
@@ -57,7 +57,7 @@
             <Font name="System Bold Italic" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="152.0" layoutY="18.0" prefHeight="46.0" prefWidth="393.0" style="-fx-font-family: Poppins;" text="Cadastro de marcas de maquiagem" textFill="#171717">
+      <Label layoutX="152.0" layoutY="18.0" prefHeight="46.0" prefWidth="393.0" style="-fx-font-family: Poppins; -fx-font-weight: bold;" text="Cadastro de marcas de maquiagem" textFill="#171717">
          <font>
             <Font name="Charter Bold" size="21.0" />
          </font>
