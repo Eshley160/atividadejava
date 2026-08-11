@@ -2,6 +2,7 @@ package com.template.controller;
 
 import com.template.model.dao.MarcasDeMaquiagemDAO;
 import com.template.model.dto.MarcasDeMaquiagemDTO;
+import com.template.validator.MaquiagemValidator;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -87,10 +88,13 @@ public class MainController
 
     @FXML
     private void btnSalvarAction(ActionEvent event) {
-        if (txtNome.getText().trim().isEmpty() || txtPaisOrigem.getText().trim().isEmpty() || txtAno.getText().trim().isEmpty()) {
-            showInfo();
+        if (!MaquiagemValidator.validarCampos(
+                txtNome,
+                txtAno,
+                txtPaisOrigem,
+                txtId)) {
+            return;
         }
-
         MarcasDeMaquiagemDTO maquiagem = new MarcasDeMaquiagemDTO();
         maquiagem.setNome(txtNome.getText());
         maquiagem.setPaisOrigem(txtPaisOrigem.getText());
@@ -109,8 +113,12 @@ public class MainController
     private void btnEditarAction(ActionEvent event) {
         MarcasDeMaquiagemDTO marcaSelecionada = tblMarcasDeMaquiagem.getSelectionModel().getSelectedItem();
         if (marcaSelecionada != null) {
-            if (txtNome.getText().trim().isEmpty() || txtPaisOrigem.getText().trim().isEmpty() || txtAno.getText().trim().isEmpty()) {
-                showError();
+            if (!MaquiagemValidator.validarCampos(
+                    txtNome,
+                    txtAno,
+                    txtPaisOrigem,
+                    txtId)) {
+                return;
             }
 
             MarcasDeMaquiagemDTO marcaDTO = new MarcasDeMaquiagemDTO();
