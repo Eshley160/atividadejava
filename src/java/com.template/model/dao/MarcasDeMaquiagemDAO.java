@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/* Classe responsável pelas operações no banco de dados relacionadas à tabela marcas_maquiagem. */
 
 public class MarcasDeMaquiagemDAO {
 
-    ArrayList<MarcasDeMaquiagemDTO> listaMaquiagens = new ArrayList<>();
-
     public ArrayList<MarcasDeMaquiagemDTO> listarMaquiagens() {
+        ArrayList<MarcasDeMaquiagemDTO> listaMaquiagens = new ArrayList<>();
 
         String sql = "SELECT * FROM marcas_maquiagem";
 
@@ -79,7 +77,6 @@ public class MarcasDeMaquiagemDAO {
         }
     }
 
-    // Atualiza os dados de uma marca utilizando o id informado
     public void atualizarMarca(MarcasDeMaquiagemDTO marca) {
         String sql = "UPDATE marcas_maquiagem SET nome = ?, pais_origem = ?, ano_fundacao = ?, cruelty_free = ? WHERE id = ?";
         try (

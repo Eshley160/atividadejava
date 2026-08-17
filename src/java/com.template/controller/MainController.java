@@ -1,7 +1,7 @@
 package com.template.controller;
 
-import com.template.model.dao.MarcasDeMaquiagemDAO;
 import com.template.model.dto.MarcasDeMaquiagemDTO;
+import com.template.service.MarcaService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import static com.template.util.DialogUtil.showError;
 import static com.template.util.DialogUtil.showInfo;
 
-public class MainController
-{
+public class MainController {
+
     @FXML private Button btnEditar;
     @FXML private Button btnDeletar;
     @FXML private TextField txtNome;
@@ -27,6 +27,12 @@ public class MainController
     @FXML private TableColumn<MarcasDeMaquiagemDTO, Integer> colAno;
     @FXML private TableColumn<MarcasDeMaquiagemDTO, String> colPaisOrigem;
     @FXML private TableColumn<MarcasDeMaquiagemDTO, Boolean> colTeste;
+
+    private final MarcaService marcaService;
+
+    public MainController() {
+        this.marcaService = new MarcaService();
+    }
 
     @FXML
     public void initialize() {
@@ -48,14 +54,11 @@ public class MainController
     }
 
     @FXML
-    private void carregarMaquiagens(){
-        MarcasDeMaquiagemDAO marcaDAO = new MarcasDeMaquiagemDAO();
-        ArrayList<MarcasDeMaquiagemDTO> listaMaquiagens = marcaDAO.listarMaquiagens();
-
+    private void carregarMaquiagens() {
+        ArrayList<MarcasDeMaquiagemDTO> listaMaquiagens = marcaService.listarMaquiagens();
         tblMarcasDeMaquiagem.getItems().clear();
-        tblMarcasDeMaquiagem.setItems(FXCollections.observableArrayList(listaMaquiagens));
+        tblMarcasDeMaquiagem.getItems().addAll(listaMaquiagens);
     }
-
     @FXML
     private void limparCampos(){
         txtId.clear();
@@ -87,19 +90,17 @@ public class MainController
 
     @FXML
     private void btnSalvarAction(ActionEvent event) {
-        if (txtNome.getText().trim().isEmpty() || txtPaisOrigem.getText().trim().isEmpty() || txtAno.getText().trim().isEmpty()) {
+        boolean sucesso = marcaService.cadastrarMarca(
+                txtNome.getText(),
+                txtPaisOrigem.getText(),
+                txtAno.getText(),
+                chkTesteAnimais.isSelected()
+        );
+
+        if (!sucesso) {
             showInfo();
+            return;
         }
-
-        MarcasDeMaquiagemDTO maquiagem = new MarcasDeMaquiagemDTO();
-        maquiagem.setNome(txtNome.getText());
-        maquiagem.setPaisOrigem(txtPaisOrigem.getText());
-        maquiagem.setAnoFundacao(Integer.parseInt(txtAno.getText()));
-        maquiagem.setCrueltyFree(chkTesteAnimais.isSelected());
-
-        MarcasDeMaquiagemDAO dao = new MarcasDeMaquiagemDAO();
-        dao.cadastrarMarca(maquiagem);
-        System.out.println("Marca cadastrada com sucesso!");
 
         carregarMaquiagens();
         limparCampos();
@@ -109,19 +110,18 @@ public class MainController
     private void btnEditarAction(ActionEvent event) {
         MarcasDeMaquiagemDTO marcaSelecionada = tblMarcasDeMaquiagem.getSelectionModel().getSelectedItem();
         if (marcaSelecionada != null) {
-            if (txtNome.getText().trim().isEmpty() || txtPaisOrigem.getText().trim().isEmpty() || txtAno.getText().trim().isEmpty()) {
+            boolean sucesso = marcaService.atualizarMarca(
+                    marcaSelecionada.getId(),
+                    txtNome.getText(),
+                    txtPaisOrigem.getText(),
+                    txtAno.getText(),
+                    chkTesteAnimais.isSelected()
+            );
+
+            if (!sucesso) {
                 showError();
+                return;
             }
-
-            MarcasDeMaquiagemDTO marcaDTO = new MarcasDeMaquiagemDTO();
-            marcaDTO.setId(marcaSelecionada.getId());
-            marcaDTO.setNome(txtNome.getText());
-            marcaDTO.setAnoFundacao(Integer.parseInt(txtAno.getText()));
-            marcaDTO.setPaisOrigem(txtPaisOrigem.getText());
-            marcaDTO.setCrueltyFree(chkTesteAnimais.isSelected());
-
-            MarcasDeMaquiagemDAO marcaDAO = new MarcasDeMaquiagemDAO();
-            marcaDAO.atualizarMarca(marcaDTO);
 
             carregarMaquiagens();
             limparCampos();
@@ -137,13 +137,10 @@ public class MainController
     private void btnDeletarAction(ActionEvent event) {
         MarcasDeMaquiagemDTO marcaSelecionada = tblMarcasDeMaquiagem.getSelectionModel().getSelectedItem();
         if (marcaSelecionada != null) {
-            MarcasDeMaquiagemDAO marcaDAO = new MarcasDeMaquiagemDAO();
-            marcaDAO.excluirMarca(marcaSelecionada.getId());
+            marcaService.excluirMarca(marcaSelecionada.getId());
 
             carregarMaquiagens();
             limparCampos();
         }
     }
-
-
 }
