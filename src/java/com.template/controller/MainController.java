@@ -2,6 +2,8 @@ package com.template.controller;
 
 import com.template.model.dto.MarcasDeMaquiagemDTO;
 import com.template.service.MarcaService;
+import com.template.validator.AnoFundacaoValidador;
+import com.template.validator.Validador;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -90,6 +92,12 @@ public class MainController {
 
     @FXML
     private void btnSalvarAction(ActionEvent event) {
+        Validador<String> validadorAno = new AnoFundacaoValidador(txtAno.getText());
+        if (!validadorAno.validar(validadorAno.getValor())) {
+            showError();
+            return;
+        }
+
         boolean sucesso = marcaService.cadastrarMarca(
                 txtNome.getText(),
                 txtPaisOrigem.getText(),
@@ -110,6 +118,12 @@ public class MainController {
     private void btnEditarAction(ActionEvent event) {
         MarcasDeMaquiagemDTO marcaSelecionada = tblMarcasDeMaquiagem.getSelectionModel().getSelectedItem();
         if (marcaSelecionada != null) {
+            Validador<String> validadorAno = new AnoFundacaoValidador(txtAno.getText());
+            if (!validadorAno.validar(validadorAno.getValor())) {
+                showError();
+                return;
+            }
+
             boolean sucesso = marcaService.atualizarMarca(
                     marcaSelecionada.getId(),
                     txtNome.getText(),
