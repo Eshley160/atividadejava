@@ -2,7 +2,6 @@ package com.template.service;
 
 import com.template.model.dao.MarcasDeMaquiagemDAO;
 import com.template.model.dto.MarcasDeMaquiagemDTO;
-import com.template.validator.MarcaValidator;
 
 import java.util.ArrayList;
 
@@ -19,9 +18,6 @@ public class MarcaService {
     }
 
     public boolean cadastrarMarca(String nome, String paisOrigem, String anoText, boolean crueltyFree) {
-        if (MarcaValidator.camposInvalidos(nome, paisOrigem, anoText)) {
-            return false;
-        }
 
         MarcasDeMaquiagemDTO maquiagem = new MarcasDeMaquiagemDTO();
         maquiagem.setNome(nome);
@@ -34,9 +30,6 @@ public class MarcaService {
     }
 
     public boolean atualizarMarca(int id, String nome, String paisOrigem, String anoText, boolean crueltyFree) {
-        if (MarcaValidator.camposInvalidos(nome, paisOrigem, anoText)) {
-            return false;
-        }
 
         MarcasDeMaquiagemDTO marcaDTO = new MarcasDeMaquiagemDTO();
         marcaDTO.setId(id);

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class MarcasDeMaquiagemDAO {
 
     public ArrayList<MarcasDeMaquiagemDTO> listarMaquiagens() {
@@ -79,6 +78,7 @@ public class MarcasDeMaquiagemDAO {
 
     public void atualizarMarca(MarcasDeMaquiagemDTO marca) {
         String sql = "UPDATE marcas_maquiagem SET nome = ?, pais_origem = ?, ano_fundacao = ?, cruelty_free = ? WHERE id = ?";
+
         try (
                 Connection c = new Conexao().conectaBD();
                 PreparedStatement ps = c.prepareStatement(sql)
@@ -88,9 +88,10 @@ public class MarcasDeMaquiagemDAO {
             ps.setInt(3, marca.getAnoFundacao());
             ps.setBoolean(4, marca.isCrueltyFree());
             ps.setInt(5, marca.getId());
-            ps.executeUpdate();
-        } catch (SQLException e) {
 
+            int linhasAlteradas = ps.executeUpdate();
+
+        } catch (SQLException e) {
             Logger.getLogger(MarcasDeMaquiagemDAO.class.getName())
                     .log(Level.SEVERE, null, e);
         }

@@ -2,8 +2,10 @@ package com.template.controller;
 
 import com.template.model.dto.MarcasDeMaquiagemDTO;
 import com.template.service.MarcaService;
-import com.template.validator.AnoFundacaoValidador;
-import com.template.validator.Validador;
+import com.template.validator.IMarcaValidator;
+import com.template.validator.MarcaValidator;
+import com.template.util.FormFill;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,9 +32,19 @@ public class MainController {
     @FXML private TableColumn<MarcasDeMaquiagemDTO, String> colPaisOrigem;
     @FXML private TableColumn<MarcasDeMaquiagemDTO, Boolean> colTeste;
 
+    private final IMarcaValidator marcaValidator;
+    private final FormFill formFill;
     private final MarcaService marcaService;
 
     public MainController() {
+        this.marcaValidator = new MarcaValidator();
+        this.formFill = new FormFill(this.marcaValidator);
+        this.marcaService = new MarcaService();
+    }
+
+    public MainController(IMarcaValidator marcaValidator) {
+        this.marcaValidator = marcaValidator;
+        this.formFill = new FormFill(this.marcaValidator);
         this.marcaService = new MarcaService();
     }
 
@@ -61,8 +73,9 @@ public class MainController {
         tblMarcasDeMaquiagem.getItems().clear();
         tblMarcasDeMaquiagem.getItems().addAll(listaMaquiagens);
     }
+
     @FXML
-    private void limparCampos(){
+    private void limparCampos() {
         txtId.clear();
         txtNome.clear();
         chkTesteAnimais.setSelected(false);
@@ -92,17 +105,25 @@ public class MainController {
 
     @FXML
     private void btnSalvarAction(ActionEvent event) {
-        Validador<String> validadorAno = new AnoFundacaoValidador(txtAno.getText());
-        if (!validadorAno.validar(validadorAno.getValor())) {
+
+        MarcasDeMaquiagemDTO marcaDTO = formFill.extrairMarcaFormulario(
+                new MarcasDeMaquiagemDTO(),
+                txtNome,
+                txtPaisOrigem,
+                txtAno,
+                chkTesteAnimais
+        );
+
+        if (marcaDTO == null) {
             showError();
             return;
         }
 
         boolean sucesso = marcaService.cadastrarMarca(
-                txtNome.getText(),
-                txtPaisOrigem.getText(),
-                txtAno.getText(),
-                chkTesteAnimais.isSelected()
+                marcaDTO.getNome(),
+                marcaDTO.getPaisOrigem(),
+                String.valueOf(marcaDTO.getAnoFundacao()),
+                marcaDTO.isCrueltyFree()
         );
 
         if (!sucesso) {
@@ -116,20 +137,30 @@ public class MainController {
 
     @FXML
     private void btnEditarAction(ActionEvent event) {
-        MarcasDeMaquiagemDTO marcaSelecionada = tblMarcasDeMaquiagem.getSelectionModel().getSelectedItem();
+        MarcasDeMaquiagemDTO marcaSelecionada =
+                tblMarcasDeMaquiagem.getSelectionModel().getSelectedItem();
+
         if (marcaSelecionada != null) {
-            Validador<String> validadorAno = new AnoFundacaoValidador(txtAno.getText());
-            if (!validadorAno.validar(validadorAno.getValor())) {
+
+            MarcasDeMaquiagemDTO marcaAtualizada = formFill.extrairMarcaFormulario(
+                    marcaSelecionada,
+                    txtNome,
+                    txtPaisOrigem,
+                    txtAno,
+                    chkTesteAnimais
+            );
+
+            if (marcaAtualizada == null) {
                 showError();
                 return;
             }
 
             boolean sucesso = marcaService.atualizarMarca(
-                    marcaSelecionada.getId(),
-                    txtNome.getText(),
-                    txtPaisOrigem.getText(),
-                    txtAno.getText(),
-                    chkTesteAnimais.isSelected()
+                    marcaAtualizada.getId(),
+                    marcaAtualizada.getNome(),
+                    marcaAtualizada.getPaisOrigem(),
+                    String.valueOf(marcaAtualizada.getAnoFundacao()),
+                    marcaAtualizada.isCrueltyFree()
             );
 
             if (!sucesso) {
@@ -150,6 +181,7 @@ public class MainController {
     @FXML
     private void btnDeletarAction(ActionEvent event) {
         MarcasDeMaquiagemDTO marcaSelecionada = tblMarcasDeMaquiagem.getSelectionModel().getSelectedItem();
+
         if (marcaSelecionada != null) {
             marcaService.excluirMarca(marcaSelecionada.getId());
 

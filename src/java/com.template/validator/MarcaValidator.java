@@ -1,27 +1,27 @@
 package com.template.validator;
 
-import java.time.Year;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MarcaValidator {
+public class MarcaValidator implements IMarcaValidator {
 
-    public static boolean camposInvalidos(String nome, String paisOrigem, String ano) {
-        if (nome == null || nome.trim().isEmpty() ||
-                paisOrigem == null || paisOrigem.trim().isEmpty() ||
-                ano == null || ano.trim().isEmpty()) {
-            return true;
-        }
+    @Override
+    public boolean validarMarca(String nome, String paisOrigem, String ano) {
 
-        try {
-            int anoInt = Integer.parseInt(ano.trim());
-            int anoAtual = 2026;
+        List<Validador<String>> validadores = new ArrayList<>();
 
-            if (anoInt < 1500 || anoInt > anoAtual) {
-                return true;
+        validadores.add(new CampoObrigatorioValidador("Nome", nome));
+        validadores.add(new CampoObrigatorioValidador("País de origem", paisOrigem));
+        validadores.add(new CampoObrigatorioValidador("Ano de fundação", ano));
+
+        validadores.add(new AnoFundacaoValidador(ano));
+
+        for (Validador<String> validador : validadores) {
+            if (!validador.validar(validador.getValor())) {
+                return false;
             }
-        } catch (NumberFormatException e) {
-            return true;
         }
 
-        return false;
+        return true;
     }
 }
