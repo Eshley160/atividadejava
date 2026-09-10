@@ -10,9 +10,9 @@ public class MarcaValidator implements IMarcaValidator {
 
         List<Validador<String>> validadores = new ArrayList<>();
 
-        validadores.add(new CampoObrigatorioValidador("Nome", nome));
-        validadores.add(new CampoObrigatorioValidador("País de origem", paisOrigem));
-        validadores.add(new CampoObrigatorioValidador("Ano de fundação", ano));
+        validadores.add(new CamposObrigatoriosValidador("Nome", nome));
+        validadores.add(new CamposObrigatoriosValidador("País de origem", paisOrigem));
+        validadores.add(new CamposObrigatoriosValidador("Ano de fundação", ano));
 
         validadores.add(new AnoFundacaoValidador(ano));
 

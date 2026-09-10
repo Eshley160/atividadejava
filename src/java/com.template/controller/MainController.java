@@ -36,12 +36,6 @@ public class MainController {
     private final FormFill formFill;
     private final MarcaService marcaService;
 
-    public MainController() {
-        this.marcaValidator = new MarcaValidator();
-        this.formFill = new FormFill(this.marcaValidator);
-        this.marcaService = new MarcaService();
-    }
-
     public MainController(IMarcaValidator marcaValidator) {
         this.marcaValidator = marcaValidator;
         this.formFill = new FormFill(this.marcaValidator);
