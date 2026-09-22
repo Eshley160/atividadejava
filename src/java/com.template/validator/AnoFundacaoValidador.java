@@ -5,6 +5,7 @@ public class AnoFundacaoValidador implements Validador<String> {
     private final String ano;
 
     public AnoFundacaoValidador(String ano) {
+        
         this.ano = ano;
     }
 

@@ -109,7 +109,7 @@ public class MainController {
         );
 
         if (marcaDTO == null) {
-            showError();
+            //showError();
             return;
         }
 
@@ -145,7 +145,7 @@ public class MainController {
             );
 
             if (marcaAtualizada == null) {
-                showError();
+                //showError();
                 return;
             }
 
@@ -158,7 +158,7 @@ public class MainController {
             );
 
             if (!sucesso) {
-                showError();
+                //showError();
                 return;
             }
 

@@ -3,6 +3,8 @@ package com.template.validator;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.template.util.DialogUtil.showError;
+
 public class MarcaValidator implements IMarcaValidator {
 
     @Override
@@ -18,6 +20,7 @@ public class MarcaValidator implements IMarcaValidator {
 
         for (Validador<String> validador : validadores) {
             if (!validador.validar(validador.getValor())) {
+                showError(validador.getMensagemErro());
                 return false;
             }
         }

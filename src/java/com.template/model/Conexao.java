@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.template.model;
 
 import java.sql.Connection;
@@ -16,12 +12,16 @@ public class Conexao {
     static String usuario = "postgres";
     static String senha = "postgres";
 
-    //função que retorna conexão com o banco de dados
+    // função que retorna conexão com o banco de dados
     public Connection conectaBD() {
         try {
-            return DriverManager.getConnection(conexao, usuario, senha); //DriverManager é uma classe responsável por gerenciar drivers de banco de dados e estabelecer conexões.
+            // Regista explicitamente o driver do PostgreSQL na JVM
+            Class.forName("org.postgresql.Driver");
+            return DriverManager.getConnection(conexao, usuario, senha);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("O driver do PostgreSQL não está presente no projeto.", e);
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException("Falha na ligação à base de dados: " + e.getMessage(), e);
         }
     }
 }

@@ -18,7 +18,7 @@ public class MaquiagemValidator {
                 txtId.getText().trim().isEmpty() ||
                 txtPaisOrigem.getText().trim().isEmpty()) {
 
-            showError();
+            //showError();
 
             return false;
         }
@@ -38,7 +38,7 @@ public class MaquiagemValidator {
                 txtId.getText().trim().isEmpty() ||
                 txtPaisOrigem.getText().trim().isEmpty()) {
 
-            showError();
+            //showError();
 
             return false;
         }
